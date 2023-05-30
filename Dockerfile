@@ -8,7 +8,10 @@ FROM gradle:6-jdk17
 WORKDIR /app
 
 # 将包括源文件在内的所有文件拷贝到容器中
-COPY . .
+# COPY . .
+COPY src /app/src
+
+ENV JAVA_HOME = C:\Users\Administrator\.jdks\corretto-17.0.7
 
 # 编译项目
 RUN gradle clean assemble -x test --quiet
