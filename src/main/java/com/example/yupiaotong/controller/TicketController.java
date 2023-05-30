@@ -8,6 +8,7 @@ import com.example.yupiaotong.entity.TrainNumber;
 import com.example.yupiaotong.util.FileUtils;
 import com.example.yupiaotong.util.Utils;
 import jakarta.annotation.PostConstruct;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ public class TicketController {
      * @return
      */
 
+    @SneakyThrows
     @ResponseBody
     @GetMapping(value = "/queryTickets")
     public String queryTickets (TicketQuery ticketQuery) {
@@ -58,7 +60,7 @@ public class TicketController {
      * @param train
      * @return
      */
-
+    @SneakyThrows
     @ResponseBody
     @GetMapping(value = "/queryRemainderTickets")
     public String queryRemainderTickets (Train train) {
