@@ -13,8 +13,5 @@ FROM openjdk:17-jdk
 
 ADD YuPiaoTong.jar app.jar
 
-# 服务暴露的端口
-#EXPOSE 8080
-
 # 运行项目
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar", "0.0.0.0:8080"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar", "0.0.0.0:80"]
