@@ -18,6 +18,7 @@ ADD YuPiaoTong.jar yupiaotong-wxcloud-1.0.jar
 #COPY settings.gradle build.gradle /app/
 
 # RUN chmod 777 /usr/bin/gradle
+ENV JAVA_HOME C:\Users\Administrator\.jdks\corretto-17.0.7
 
 # 编译项目
 RUN gradle clean assemble -x test --quiet
