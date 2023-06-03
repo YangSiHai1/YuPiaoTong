@@ -8,7 +8,6 @@ import com.example.yupiaotong.entity.TrainNumber;
 import com.example.yupiaotong.util.FileUtils;
 import com.example.yupiaotong.util.Utils;
 import jakarta.annotation.PostConstruct;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Controller
 public class TicketController {
@@ -26,6 +26,8 @@ public class TicketController {
     @Autowired
     private ResourceLoader resourceLoader;
     private static Map<String,String> StationsMap;
+    private final Logger logger = Logger.getLogger("TicketController");
+
 
     @PostConstruct
     public void init() {
@@ -36,49 +38,61 @@ public class TicketController {
 
     /**
      * 列车信息
-     * @param ticketQuery
-     * @return
+     * @param ticketQuery 车票查询
+     * @return 火车信息
      */
 
-    @SneakyThrows
     @ResponseBody
     @GetMapping(value = "/queryTickets")
     public String queryTickets (TicketQuery ticketQuery) {
 
-        String depStation = StationsMap.get(ticketQuery.getDepStation());
-        String arrStation = StationsMap.get(ticketQuery.getArrStation());
-        String depDate = ticketQuery.getDepDate();
-        System.out.println(ticketQuery);
+        try {
+            String depStation = StationsMap.get(ticketQuery.getDepStation());
+            String arrStation = StationsMap.get(ticketQuery.getArrStation());
+            String depDate = ticketQuery.getDepDate();
+            logger.info(ticketQuery.toString());
 
-        //  1.车票查询
-        return Utils.queryTickets(depStation, arrStation, depDate);
+            //  1.车票查询
+            return Utils.queryTickets(depStation, arrStation, depDate);
+
+        } catch (Exception e) {
+            logger.severe(e.toString());
+            e.printStackTrace();
+            return "";
+        }
+
     }
 
 
     /**
      * 余票信息
-     * @param train
-     * @return
+     * @param train 这个车次
+     * @return 这个车次的火车信息
      */
-    @SneakyThrows
     @ResponseBody
     @GetMapping(value = "/queryRemainderTickets")
     public String queryRemainderTickets (Train train) {
 
-        String depStation = train.getDepStationName();
-        String arrStation = train.getArrStationName();
-        String depDate = train.getDepDate();
-        String trainNo = train.getTrainNo();
-        System.out.println(train);
+        try {
+            String depStation = train.getDepStationName();
+            String arrStation = train.getArrStationName();
+            String depDate = train.getDepDate();
+            String trainNo = train.getTrainNo();
+            logger.info(train.toString());
 
+            //  @TODO：优化：车次信息加入缓存时间12h
+            //  1.获取车次信息
+            TrainNumber trainNumber = Utils.queryTrainNumber(trainNo, depDate, depStation, arrStation);
+            logger.info(trainNumber.toString());
 
-        //  @TODO：优化：车次信息加入缓存时间12h
-        //  1.获取车次信息
-        TrainNumber trainNumber = Utils.queryTrainNumber(trainNo, depDate, depStation, arrStation);
-        System.out.println(trainNumber);
+            //  2.余票查询
+            return Utils.queryRemainderTickets(trainNumber, StationsMap);
 
-        //  2.余票查询
-        return Utils.queryRemainderTickets(trainNumber, StationsMap);
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            e.printStackTrace();
+            return "";
+        }
     }
 
 
