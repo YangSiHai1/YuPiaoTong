@@ -11,7 +11,7 @@ FROM openjdk:17-jdk
 # 将包括源文件在内的所有文件拷贝到容器中
 #COPY . .
 
-ADD out/artifacts/YuPiaoTong_main_jar/YuPiaoTong.main.jar app.jar
+ADD YuPiaoTong.jar app.jar
 
 # 服务暴露的端口
 EXPOSE 8080
