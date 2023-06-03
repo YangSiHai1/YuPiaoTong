@@ -6,12 +6,12 @@
 FROM openjdk:17-jdk
 
 # 设置容器内的当前目录
-WORKDIR /app
+#WORKDIR /app
 
 # 将包括源文件在内的所有文件拷贝到容器中
-COPY . .
+#COPY . .
 
-ADD YuPiaoTong.jar app.jar
+ADD out/artifacts/YuPiaoTong_main_jar/YuPiaoTong.main.jar app.jar
 
 # 服务暴露的端口
 EXPOSE 8080
