@@ -58,7 +58,7 @@ public class TicketController {
         } catch (Exception e) {
             logger.severe(e.toString());
             e.printStackTrace();
-            return "";
+            return "400";
         }
 
     }
@@ -91,7 +91,7 @@ public class TicketController {
         } catch (Exception e) {
             logger.severe(e.getMessage());
             e.printStackTrace();
-            return "";
+            return "400";
         }
     }
 
@@ -99,7 +99,7 @@ public class TicketController {
     @ResponseBody
     @GetMapping(value = "/test")
     public String test () {
-        return "";
+        return "400";
     }
 
 
