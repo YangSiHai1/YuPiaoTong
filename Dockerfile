@@ -2,8 +2,8 @@
 # 本 Dockerfile 可能不能完全覆盖您的项目需求，若遇到问题请根据实际情况修改或询问客服
 
 # 使用 Gradle 官方镜像
-# gradle:7.6.1-jdk17
-FROM openjdk:17-jdk
+# gradle:7.6.1-jdk17_openjdk:17-jdk
+FROM gradle:7.6.1-jdk17
 
 # 设置容器内的当前目录
 #WORKDIR /app
