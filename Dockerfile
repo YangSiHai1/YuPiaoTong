@@ -9,9 +9,10 @@ FROM gradle:7.6.1-jdk17
 WORKDIR /app
 
 # 将包括源文件在内的所有文件拷贝到容器中
+COPY YuPiaoTong.jar /app
 COPY . .
 
 EXPOSE 80
 
 # 运行项目
-CMD ["java", "-jar", "YuPiaoTong.jar"]
+CMD ["java", "-jar", "/app/YuPiaoTong.jar"]
