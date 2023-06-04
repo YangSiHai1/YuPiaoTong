@@ -4,26 +4,11 @@ FROM openjdk:17-jdk-slim
 # 设置工作目录
 WORKDIR /app
 
-# 将 build.gradle 和其他必需文件拷贝到镜像中
-COPY build.gradle /app
-COPY src /app/src
+# 复制应用程序的 jar 包到镜像中
+COPY build/libs/YuPiaoTong.jar /app/YuPiaoTong.jar
 
-# 安装 Gradle 并编译项目
-RUN apt-get update && apt-get install -y wget unzip \
-    && wget https://services.gradle.org/distributions/gradle-7.0-bin.zip \
-    && unzip gradle-7.0-bin.zip \
-    && mv gradle-7.0 /usr/share/gradle \
-    && rm -rf gradle-7.0-bin.zip \
-    && export PATH=$PATH:/usr/share/gradle/bin \
-    && gradle build --no-daemon \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /app/src \
-    && mv /app/build/libs/*.jar /app/app.jar
-
-EXPOSE 80
-
-# 运行应用程序
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# 运行 Spring Boot 应用程序
+CMD ["java", "-jar", "YuPiaoTong.jar"]
 
 
 
