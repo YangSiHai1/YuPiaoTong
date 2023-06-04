@@ -6,14 +6,12 @@
 FROM gradle:7.6.1-jdk17
 
 # 设置容器内的当前目录
-#WORKDIR /app
+WORKDIR /app
 
 # 将包括源文件在内的所有文件拷贝到容器中
-#COPY . .
-
-ADD YuPiaoTong.jar app.jar
+COPY . .
 
 EXPOSE 80
 
 # 运行项目
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
+CMD ["java", "-jar", "YuPiaoTong.jar"]
