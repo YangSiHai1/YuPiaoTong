@@ -13,5 +13,7 @@ FROM openjdk:17-jdk
 
 ADD YuPiaoTong.jar app.jar
 
+EXPOSE 80
+
 # 运行项目
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar", "0.0.0.0:80"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
